@@ -14,45 +14,42 @@ These are cells that store text. To assign text to a cell, use the following com
 #+begin_src
 A1 = "foo"
 #+end_src
-N.B. Quotes are required.
-When displayed in the sheet, the contents are truncated if they are longer 10 letter or longer. The full contents are never lost and can be retrieved by typing the cell's name as a single command.
+N.B. Quotes are required.\\
 
+When displayed in the sheet, the contents are truncated if they are longer 10 letter or longer. The full contents are never lost and can be retrieved by typing the cell's name as a single command.
 *** Value Cells
 These cells store real numbers. To assign a number to a cell use the following command:
 #+begin_src
 A1 = 3.1415
 #+end_src
-
 *** Formula Cells:
 These cells store formulas. When displayed in the sheet, these cells will either show the value the formula evaluates too, or #ERROR, if there was a divide by zero error, you tried to reference a non-number cell, or there was a cyclical dependency error. To assign a formula to a cell use the following command:
 #+begin_src
 A1 = ( 1 + 3.4 )
 #+end_src
-
-Text Excel requires the parenthesis before and after the formula, as well as spaces between every single token, or it will not be able to understand your request.
+Text Excel requires the parenthesis before and after the formula, as well as spaces between every single token, or it will not be able to understand your request.\\
 
 Formula Cells follow standard mathematical rules of precedence and only support the following: +, -, /, *, (, ), and cell references. For example, the following is allowed:
 #+begin_src
 A1 = 3
 B1 = ( A1 * ( 2 + A1 ) )
 #+end_src
-After this, B1 would evaluate to 15
+After this, B1 would evaluate to 15.\\
+
 Formulas also support taking the sum or average of a range, like so:
-Note that there should be no spaces before or after the dash in ranges
 #+begin_src
 A1 = 3
 A2 = 4
 A3 = 5
 B2 = SUM A1-A3 + AVG A1-A3
 #+end_src
-
+Note that there should be no spaces before or after the dash in ranges
 ** Other commands
 *** Clearing the sheet
 #+begin_src
 clear A1 // clear a single cell
 clear // clear the entire sheet
 #+end_src
-
 *** Working with history
 #+begin_src
 history start n // starts recording commands, and will save only the last n
@@ -60,10 +57,11 @@ history display // displays all the recorded commands, with the earliest at the 
 history clear n // removes the n most recent commands from the history
 history stop // stop recording history
 #+end_src
-
 *** Sort a region
 #+begin_src
 sorta A1-B3 // sort the range ascending
 sortd A1-B3 // sort the range descending
 #+end_src
+Note that there should be no spaces before or after the dash in ranges.\\
+
 When sorting, cells evaluating to numbers are considered "large" than text cells, which are considered "larger" than blank cells.
