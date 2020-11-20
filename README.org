@@ -8,7 +8,10 @@ Text-Excel is a Java program that I wrote as the capstone to my Sophomore AP CS 
 *** Advent Of Code solutions
 Some projects are given an Advent Of Code label. Advent Of Code is set of 25 programming puzzles, all created by Eric Wastl, which are released each year during December. Anyone participating in the event reads through the problem description and then writes some code to solve the problem. Each problem has two parts of escalating difficulty, which are similar, but not the same. Also included with each puzzle is a text file containing the input used for that puzzle. This input is unique to each person. For more information on Advent of Code you can read a description written by Eric Wastl himself: https:\adventofcode.com/2019/about \\
 
-What I have provided are solutions to some of the 2019 Advent of Code problems that I feel best illustrate my current skills with the Haskell programming language.
+What I have provided are solutions to some of the 2019 Advent of Code problems that I feel best illustrate my current skills with the Haskell programming language. I have completed all parts of all 25 puzzle from 2019, and all parts of the first 20 puzzles from 2018. \\
 
+In 2019 I added my account to the Haskell Leaderboard, where Haskell coders from all over the world were able to compete to see who was able to solve each puzzle the fastest. This also takes accuracy into account, as each wrong guess requires you to wait 5 minutes before submitting another answer. When you sum together the completion times for all 25 puzzles from 2019, I was *10th* in the world amongst Haskell coders for speed
+
+The solutions I have showcased here in my portfolio are from the following puzzles:
 - Advent Of Code 2019 Day 20 (Using BFS to traverse a maze)
 - Advent Of Code 2019 Day 24 (Tracking state while simulating a cellular automata)
