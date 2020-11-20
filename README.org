@@ -2,10 +2,13 @@
 ** Who Am I?
 My name is Avi Caspe, and I am 20 years old. I have had a long history of enjoying programming. In High School I took AP Computer Science A as Sophomore, and passed the AP exam with a 5. Since then I have continued to grow and learn as a programmer. My current passion is Haskell and the Function Programming paradigm as a whole. All the Haskell knowledge I have has been self taught via the internet, as well as public online chatrooms.
 ** What this Portfolio contains
+This porfolio contains a few projects that I feel accurately represent my skills.
 *** Text Excel
-This porfolio contains a few projects that I feel accurately represent my skills. Text-Excel is a Java program that I wrote as the capstone to my Sophomore AP CS course. It is a simplified text based spreadsheet.//
-
+Text-Excel is a Java program that I wrote as the capstone to my Sophomore AP CS course. It is a simplified text based spreadsheet.
 *** Advent Of Code solutions
-Some projects are given an Advent Of Code label. Advent Of Code is set of 25 programming puzzles, all created by Eric Wastl, which are released each year during December. Anyone participating in the event reads through the problem description and then writes some code to solve the problem. Each problem has two parts of escalating difficulty, which are similar, but not the same. Also included with each puzzle is a text file containing the input used for that puzzle. This input is unique to each person. For more information on Advent of Code you can read a description written by Eric Wastl himself: https://adventofcode.com/2019/about //
+Some projects are given an Advent Of Code label. Advent Of Code is set of 25 programming puzzles, all created by Eric Wastl, which are released each year during December. Anyone participating in the event reads through the problem description and then writes some code to solve the problem. Each problem has two parts of escalating difficulty, which are similar, but not the same. Also included with each puzzle is a text file containing the input used for that puzzle. This input is unique to each person. For more information on Advent of Code you can read a description written by Eric Wastl himself: https:\adventofcode.com/2019/about \\
 
 What I have provided are solutions to some of the 2019 Advent of Code problems that I feel best illustrate my current skills with the Haskell programming language.
+
+- Advent Of Code 2019 Day 20 (Using BFS to traverse a maze)
+- Advent Of Code 2019 Day 24 (Tracking state while simulating a cellular automata)
