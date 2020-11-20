@@ -23,7 +23,7 @@ These cells store real numbers. To assign a number to a cell use the following c
 A1 = 3.1415
 #+end_src
 *** Formula Cells:
-These cells store formulas. When displayed in the sheet, these cells will either show the value the formula evaluates too, or #ERROR, if there was a divide by zero error, you tried to reference a non-number cell, or there was a cyclical dependency error. To assign a formula to a cell use the following command:
+These cells store formulas. When displayed in the sheet, these cells will either show the value the formula evaluates to, or #ERROR, if there was a divide by zero error, you tried to reference a non-number cell, or there was a cyclical dependency error (A1 = B1 + 2, B1 = A1 * 4). To assign a formula to a cell use the following command:
 #+begin_src
 A1 = ( 1 + 3.4 )
 #+end_src
@@ -64,4 +64,4 @@ sortd A1-B3 // sort the range descending
 #+end_src
 Note that there should be no spaces before or after the dash in ranges.\\
 
-When sorting, cells evaluating to numbers are considered "large" than text cells, which are considered "larger" than blank cells.
+When sorting, cells evaluating to numbers are considered "larger" than text cells, which are considered "larger" than blank cells.
