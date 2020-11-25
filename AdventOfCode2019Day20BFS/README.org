@@ -3,7 +3,7 @@
 The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a github account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.//
 https://adventofcode.com/2019/day/24 //
 Because I have completed both parts of the puzzle, I have access to both parts of the problem statement. A large part of the problem statement is an fully worked out example.
-** What This Troblem Illustrates
+** What This Problem Illustrates
 This problem showcases using a Breadth First Search (BFS) to traverse a maze in the fewest number of steps.
 ** Problem Statement
 *** Part 1
