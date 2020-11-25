@@ -1,10 +1,10 @@
 * Advent Of Code 2019 Day 24
 ** Notes
-The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a github account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.//
-https://adventofcode.com/2019/day/24 //
-Because I have completed both parts of the puzzle, I have access to both parts of the problem statement. A large part of the problem statement is an fully worked out example.
+The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a github account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.\\
+https://adventofcode.com/2019/day/24 \\
+Because I have completed both parts of the puzzle, I have access to both parts of the problem statement. A large part of the problem statement is a fully worked out example.
 ** What This Problem Illustrates
-This problem showcases my ability to work with complicated data structures, such as a key-value pair map. It also shows my approach to track of state, and not accidentally overwriting the data I'm mutating.
+My solution to this problem showcases my ability to work with complicated data structures, such as a key-value pair map. It also shows my approach to track of state, and not accidentally overwriting the data I'm mutating.
 ** Problem Statement
 *** Part 1
 You land on Eris, your last stop before reaching Santa. As soon as you do, your sensors start picking up strange life forms moving around: Eris is infested with bugs! With an over 24-hour roundtrip for messages between you and Earth, you'll have to deal with this problem on your own.\\

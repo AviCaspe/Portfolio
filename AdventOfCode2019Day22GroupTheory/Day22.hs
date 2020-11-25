@@ -60,7 +60,7 @@ mkShuffleFunc :: (KnownNat s)  -- Witness that s is a nat, required for the Modu
               -> ShuffleFunc s -- Linear Function
 mkShuffleFunc i = foldMap shuffle ops
   where
-    shuffle NewDeal       = SF (-1) (- 1)
+    shuffle NewDeal       = SF (-1) (-1)
     shuffle (Cut n)       = SF 1 (toMod $ -n)
     shuffle (Increment n) = SF (toMod n) 0
     ops = parseShuffle i

@@ -1,10 +1,10 @@
 * Advent Of Code 2019 Day 22
 ** Notes
-The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a github account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.//
-https://adventofcode.com/2019/day/24 //
-Because I have completed both parts of the puzzle, I have access to both parts of the problem statement. A large part of the problem statement is an fully worked out example.
+The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a github account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.\\
+https://adventofcode.com/2019/day/24 \\
+Because I have completed both parts of the puzzle, I have access to both parts of the problem statement. A large part of the problem statement is a fully worked out example.
 ** What This Problem Illustrates
-This problem uses Affine Transformations (essentially a linear equation) to turn a complicated sequence of data transformations into a much simpler data representation. I also some of Haskell's more mathematical abstractions to easily work with the resulting representation of data.
+My solution to this problem uses linear equations to turn a complicated sequence of data transformations into a much simpler data representation. I also used some of Haskell's more mathematical abstractions to easily work with the resulting representation of data.
 ** Problem Statement
 *** Part 1
 There isn't much to do while you wait for the droids to repair your ship. At least you're drifting in the right direction. You decide to practice a new card shuffle you've been working on.\\
@@ -124,10 +124,9 @@ deal into new stack
 Result: 3 0 7 4 1 8 5 2 9 6
 #+end_src
 Positions within the deck count from 0 at the top, then 1 for the card immediately below the top card, and so on to the bottom. (That is, cards start in the position matching their number.)\\
-*** The Challenge
+**** The Challenge
 After shuffling your factory order deck of 10007 cards, what is the position of card 2019?\\
-
-** Part 2
+*** Part 2
 After a while, you realize your shuffling skill won't improve much more with merely a single deck of cards. You ask every 3D printer on the ship to make you some more cards while you check on the ship repairs. While reviewing the work the droids have finished so far, you think you see Halley's Comet fly past!\\
 
 When you get back, you discover that the 3D printers have combined their power to create for you a single, giant, brand new, factory order deck of 119315717514047 space cards.\\
@@ -137,5 +136,5 @@ Finally, a deck of cards worthy of shuffling!\\
 You decide to apply your complete shuffle process (your puzzle input) to the deck 101741582076661 times in a row.\\
 
 You'll need to be careful, though - one wrong move with this many cards and you might overflow your entire ship!\\
-*** The Challenge
+**** The Challenge
 After shuffling your new, giant, factory order deck that many times, what number is on the card that ends up in position 2020?
