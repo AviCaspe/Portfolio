@@ -1,6 +1,6 @@
 * Advent Of Code 2019 Day 22
 ** Notes
-The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a github account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.\\
+The following puzzle description has been taken directly from the Advent of Code website. This website requires you to authenticate with either google, twitter, or a GitHub account. The website also requires you to solve part 1 and submit an answer before you can get the prompt for part 2.\\
 https://adventofcode.com/2019/day/24 \\
 Because I have completed both parts of the puzzle, I have access to both parts of the problem statement. A large part of the problem statement is a fully worked out example.
 ** What This Problem Illustrates
@@ -138,3 +138,103 @@ You decide to apply your complete shuffle process (your puzzle input) to the dec
 You'll need to be careful, though - one wrong move with this many cards and you might overflow your entire ship!\\
 **** The Challenge
 After shuffling your new, giant, factory order deck that many times, what number is on the card that ends up in position 2020?
+** How I Solved This Problem
+The following section is an outline of how I arrived at the solution that is present in this repo. It will show the complete journey from the start to finish, including any false paths I went down.
+*** Solving Part 1 In A Quick And Dirty Way
+This puzzle consists of shuffling a large deck of cards by using three different operations. You can do a "new deal", you can "cut n", or you can "deal with increment n".
+
+The first thing I did when looking at this problem was examine my own unique puzzle input. Because working with Strings in Haskell is actually quite difficult, I'd much rather take advantage of Haskell's Algebraic Datatype (ADT) system. Since there are only three different operations in total the ADT I created for this problem isn't too difficult to understand.
+#+begin_src haskell
+data ShuffleOp = NewDeal
+               | Cut Integer
+               | Increment Integer
+               deriving (Show, Eq)
+#+end_src
+Once I have my data this form, it is a lot easier to work with. From here I can write functions that take a ShuffleOp value as input, examine which of the three operations it is, and then do a different thing for each case. This feature is called pattern matching and is similar to a multi-part function in mathematics.
+
+To convert my input file into this format, I used the wonderful [[https://hackage.haskell.org/package/megaparsec][megaparsec]] library. The details of this parser aren't too interesting, as this data is fairly simple, so I won't be explaining it here. The parsing code is at the end of the Day22.hs file in this repo if you are interested in looking at it.
+
+Now that I had a better data representation of input, it was to actually start shuffling the cards. Because I couldn't think of a better way to do this, I just created a list with 10,000 integers, and just manipulated that. Because I didn't save my first attempt at this problem, I don't remember exactly how I solved this, but it wasn't easy. In fact, the only easy thing about this noticing that a NewDeal operation simply reverses the list.
+
+Once I had my function that would take a deck (integer list from 0 to N), and a ShuffleOp, and return a new deck, It wasn't too hard to apply each step from the input in order and then extract the card at the 2019th place at the end.
+
+This particular approach took about a minute to run on my laptop. However, when I entered my solution into the Advent Of Code website, and got a look at part 2, I quickly realized I'd need a different strategy.
+*** More Cards Means More Thought Required
+Part 2 ups the ante in two ways. First, it asks you to place 1.1*10^14 cards into the deck, and second, it asks you to apply all the shuffle operations in 1.1*10^14 times in a row. Either change on its own would have been hard to deal with, but both together was quite overwhelming.
+
+After thinking about the problem for a while, and looking at the examples, I realized something interesting: each of the three operations could be represented as a linear equation of the following form if one only selects the right values for M and N:
+#+begin_src
+newPosition = (m * oldPosition + n) mod deckSize
+#+end_src
+N.B. We need modular arithmetic here because a deck of size N must have cards with numbers 0-N in it. Using modular arithmetic enforces these boundaries.
+
+In particular, I chose the following linear equations for the 3 operations:
+#+begin_src
+NewDeal:     newPosition = (-1 * oldPosition - 1) mod deckSize
+Cut N:       newPosition = ( 1 * oldPosition - N) mod deckSize
+Increment N: newPosition = ( N * oldPosition + 0) mod deckSize
+#+end_src
+Written like this, it's clear that we only need to store two different numbers for each shuffle operation. This representation is also a lot more composable. To deal with all the operations having a modulus of the current deck size, I relied on the [[https://hackage.haskell.org/package/modular-arithmetic][modular-arithmetic]] library. It essential gives me a wrapper that I can wrap all the numbers in, and overloads all the mathematical operators and functions so that they do modular arithmetic properly for me. It's pretty neat. With this in place, I realized that I have to store 3 different things for each shuffle operation, the two variables for the linear equation, as well as the deck size for the modulus. I created a data type to do just that.
+#+begin_src haskell
+-- newPosition = (n * oldPosition + m) mod deckSize
+data ShuffleFunc s = SF (Integer `Mod` s) (Integer `Mod` s) deriving Show
+#+end_src
+With this representation in place, I no longer care how large a deck is, I can shuffle it just fine. The only issue now is composing shuffles.
+*** Haskell and the Beauty of Composition
+In Mathematics, when ever you have a group of things, and you have a closed method for combining them (I.E. the combination method takes two elements of the group, and creates another element of the group), that is called a semigroup. For example, real numbers form a Semigroup under addition. This is because you can take any two real numbers and add them together, and get a third element.
+
+When a group meets the conditions to be a Semigroup and has an identity element, it's called Monoid. Real numbers and Addition can be shown to be a Monoid with the identity being 0. Another example of a Monoid is Booleans, using the composition of bit-wise And with the identity element being True.
+
+What does any of this have to do with Haskell and shuffling cards? Haskell happens to have all sorts of useful functions for working with Semigroups and Monoids. First, we just have to show Haskell what composition function and identity element we want to use. I've done that like so:
+#+begin_src haskell
+-- Applying ShuffleFunc x, then ShuffleFunc y is the same as
+-- just Shuffling once, using the correct combined function
+instance (KnownNat s) => Semigroup (ShuffleFunc s) where
+  -- c(ax + b) + d
+  -- cax + cb + d
+  SF a b <> SF c d = SF (c * a) (c * b + d)
+
+-- Monoid requires us to add be able to create an identity element
+-- Here the Identity is to do nothing to the deck's order
+instance (KnownNat s) => Monoid (ShuffleFunc s) where
+  -- 1x + 0
+  mempty = SF 1 0
+#+end_src
+Because of the way I defined the ShuffleFunc datatype, all the mathematical operations here are done Mod s. N.B. You can ignore the KnownNat stuff, it's just machinery to get the program to do modular arithmetic for us):
+
+Using this I can tell Haskell to create a single combined linear equation that represents doing my entire shuffle sequence from the input once:
+
+#+begin_src haskell
+-- Creates a shuffle function
+-- This takes the input data, and turns it into
+-- A single linear function representing
+-- applying all the operations in the input once
+mkShuffleFunc :: (KnownNat s)  -- Witness that s is a nat, required for the Modular Arithmetic
+              => String        -- Input
+              -> ShuffleFunc s -- Linear Function
+mkShuffleFunc i = foldMap shuffle ops
+  where
+    shuffle NewDeal       = SF (-1) (-1)
+    shuffle (Cut n)       = SF 1 (toMod $ -n)
+    shuffle (Increment n) = SF (toMod n) 0
+    ops = parseShuffle i
+#+end_src
+First ops converts the input into the intermediary ShuffleOp representation, then foldMap (from the haskell standard library) turns the data into the ShuffleFunc (SF) linear function representation and combines them all together. Looking back at my code a year later, I see that the ShuffleOp datatype is completely unneeded and I can just directly from String -> Linear Function. ShuffleOp is a holdover from my first attempt, which manipulated a long list, and stored the positions of all the cards at every step of the process.
+
+Using this to solve part 1 is trivial; Just take the resulting linear function, and plug 2019 into that figure out where card 2019 ends up.
+
+Part 2 is harder, because we need to use our combination operator from before to apply this sequence of shuffles again and again and again:
+#+begin_src
+let f(x) be the function representing following all the steps in the input once. For part 2 we need:
+f(x) <> f(x) <> f(x) <>... 1.1*10^14 times
+#+end_src
+I did actually create a loop that was going to do this composition that many times, but after 5 minutes and no result, I killed that off. Turns out there's a more clever way to do this. It's built in function called "stimes", and uses a method called repeated squaring, here's a brief explanation of how it works:
+#+begin_src
+(2 + 2) + (2 + 2) + (2 + 2) + (2 + 2)
+(4 + 4) + (4 + 4)
+(8 + 8)
+16
+#+end_src
+At each step of the computation, we do that operation in the parenthesis once, and use that result multiple times for the next layer. This works because one of the rules of being Semigroup is that the associative property holds. I know it holds for our linear functions (even in modular arithmetic land) both because I proved it by hand, and because I looked it up online.
+
+Using "stimes" it reduces the number of times we need to apply our composition operation from 1.1*10^14 to a mere 47. The rest of part 2 is fairly straightforward, and outlined in the code, if you read the comments.
